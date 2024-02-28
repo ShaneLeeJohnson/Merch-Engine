@@ -38,7 +38,7 @@ router.get('/:id', async (req, res) => {
 router.post('/', async (req, res) => {
   // create a new category
   if (!req.body.category_name) {
-    return res.status(400).json({message: 'Category name is required!'});
+    return res.status(400).json({ message: 'Category name is required!' });
   }
 
   try {
@@ -49,8 +49,26 @@ router.post('/', async (req, res) => {
   }
 });
 
-router.put('/:id', (req, res) => {
+router.put('/:id', async (req, res) => {
   // update a category by its `id` value
+  if (!req.body.category_name) {
+    return res.status(400).json({ message: 'Category name is required!' });
+  }
+
+  try {
+    const categoryData = await Category.findByPk(req.params.id);
+
+    if (!categoryData) {
+      return res.status(404).json({ message: 'No category found with that id!' });
+    }
+
+    categoryData.category_name = req.body.category_name;
+    await categoryData.save();
+
+    res.status(200).json(categoryData);
+  } catch (err) {
+    res.status(500).json({ message: 'Failed to update category' });
+  }
 });
 
 router.delete('/:id', (req, res) => {
