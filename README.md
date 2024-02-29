@@ -19,7 +19,6 @@ To see the application in action, please watch the following video:
 
 [Merch-Engine-recording.webm](https://github.com/ShaneLeeJohnson/Merch-Engine/assets/77424320/6d4aa43f-dba8-432f-ad9a-df7b171842d2)
 
-
 ## Credits
 
 UTSA Full Stack Flex Online Starter Code: https://github.com/coding-boot-camp/fantastic-umbrella
