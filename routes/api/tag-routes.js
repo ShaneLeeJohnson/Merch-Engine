@@ -1,11 +1,13 @@
+// imports express and calls the Router method on it then assigns it to a router variable
 const router = require('express').Router();
+
+// imports the models that will be used in this route
 const { Tag, Product, ProductTag } = require('../../models');
 
 // The `/api/tags` endpoint
 
+// This route will get all tags
 router.get('/', async (req, res) => {
-  // find all tags
-  // be sure to include its associated Product data
   try {
     const tagData = await Tag.findAll({
       include: [{ model: Product }],
@@ -16,9 +18,8 @@ router.get('/', async (req, res) => {
   }
 });
 
+// This route will get a specific tag by referencing its id
 router.get('/:id', async (req, res) => {
-  // find a single tag by its `id`
-  // be sure to include its associated Product data
   try {
     const tagData = await Tag.findByPk(req.params.id, {
       include: [{ model: Product }],
@@ -35,8 +36,8 @@ router.get('/:id', async (req, res) => {
   }
 });
 
+// This route will create a new tag
 router.post('/', async (req, res) => {
-  // create a new tag
   if (!req.body.tag_name) {
     return res.status(400).json({ message: 'Tag name is required!' });
   }
@@ -49,8 +50,8 @@ router.post('/', async (req, res) => {
   }
 });
 
+// This route will update an existing tag by referencing its id
 router.put('/:id', async (req, res) => {
-  // update a tag's name by its `id` value
   if (!req.body.tag_name) {
     return res.status(400).json({ message: 'Tag name is required!' });
   }
@@ -71,8 +72,8 @@ router.put('/:id', async (req, res) => {
   }
 });
 
+// This route will delete an existing tag by referencing its id
 router.delete('/:id', async (req, res) => {
-  // delete on tag by its `id` value
   try {
     const tagData = await Tag.destroy({
       where: {
@@ -91,4 +92,5 @@ router.delete('/:id', async (req, res) => {
   }
 });
 
+// Exports the route
 module.exports = router;
